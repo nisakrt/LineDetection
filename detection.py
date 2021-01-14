@@ -1,9 +1,23 @@
 import cv2
 import numpy as np
 from mqtt_class import mqtt
+import utils
+import signal
+import os
 
-### Ucretsiz MQTT Broker'ı uzerinde islem yapilmasi icin 
-mq=mqtt(broker="185.16.238.250")
+def sigint_handler(signum, frame):
+    if signum == signal.SIGINT:
+        logger.error( 'Kesme geldi programdan çıkılıyor...' )
+    os.kill( os.getpid(), signal.SIGKILL )
+
+
+# configure logging
+logger = utils.set_logger( __name__, __file__ )
+logger.info( 'Kod Baslatildi' )
+signal.signal( signal.SIGINT, sigint_handler )
+
+### Ucretsiz MQTT Broker'ı uzerinde islemler yapilmasi için internet üzerinden free host kullanıldı 
+mq=mqtt(broker="broker.emqx.io")
 mq.connect()
 cap = cv2.VideoCapture("video.mp4")
 
