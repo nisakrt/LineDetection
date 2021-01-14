@@ -1,6 +1,10 @@
 import cv2
 import numpy as np
+from mqtt_class import mqtt
 
+### Ucretsiz MQTT Broker'ı uzerinde islem yapilmasi icin 
+mq=mqtt(broker="185.16.238.250")
+mq.connect()
 cap = cv2.VideoCapture("video.mp4")
 
 while True:
